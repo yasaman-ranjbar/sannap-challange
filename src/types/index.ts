@@ -1,4 +1,4 @@
-// Define your TypeScript types and interfaces here
+
 
 // Example User type
 export interface User {
@@ -16,5 +16,5 @@ export interface ApiResponse<T> {
 
 // Example Form Data type
 export interface FormData {
-  [key: string]: any;
+  [key: string]: unknown;
 }
