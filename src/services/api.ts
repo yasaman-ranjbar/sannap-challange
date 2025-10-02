@@ -1,5 +1,4 @@
 // Core API service configuration
-import { API_BASE_URL } from "../utils/constants";
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string>;
@@ -11,6 +10,8 @@ class ApiService {
   constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
+
+  
 
   private async request<T>(
     endpoint: string,
@@ -24,6 +25,7 @@ class ApiService {
       const queryString = new URLSearchParams(params).toString();
       url += `?${queryString}`;
     }
+
 
     // Default headers
     const headers = {
@@ -71,4 +73,4 @@ class ApiService {
   }
 }
 
-export const apiService = new ApiService(API_BASE_URL);
+export const apiService = new ApiService(import.meta.env.API_BASE_URL as string);

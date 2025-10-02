@@ -3,7 +3,7 @@ import { apiService } from "../../api";
 import type { User, ApiResponse } from "../../../types";
 import type { UserCheckAgencyCallProps, UserOTPProps, UserValidateOTPProps } from "./type";
 
-export const userService = {
+export const userApi = {
   createOTP: async (data: UserOTPProps): Promise<ApiResponse<User>> => {
     return apiService.post<ApiResponse<User>>("/create_otp/", data);
   },
