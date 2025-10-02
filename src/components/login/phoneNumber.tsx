@@ -3,7 +3,7 @@ import type { UserOTPProps } from "../../services/api/users/type";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { phoneValidationSchema } from "../../schemas";
-import { userApi } from "../../services/api/users/userService";
+import { userApi } from "../../services/api/users/userApi";
 import { showToast, successMessages } from "../../utils/toast";
 
 const PhoneNumber = () => {
