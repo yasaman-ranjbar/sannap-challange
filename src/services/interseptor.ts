@@ -1,5 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
+import { showToast } from "../utils/toast";
 
 export type APIError = {
     status?: number;
@@ -44,18 +45,37 @@ const createAPIClient = (baseURL: string): AxiosInstance => {
             switch (error.response?.status) {
                 case 400:
                     apiError.message = serverMessage || "دیتای ارسال شده معتبر نمیباشد";
+                    showToast.error(apiError.message);
                     break;
                 case 401:
                     apiError.message = serverMessage || "دسترسی غیرمجاز";
+                    showToast.unauthorized();
                     break;
                 case 403:
                     apiError.message = serverMessage || "کاربر غیرمجاز";
+                    showToast.forbidden();
+                    break;
+                case 404:
+                    apiError.message = serverMessage || "صفحه یا منبع مورد نظر یافت نشد";
+                    showToast.notFound();
+                    break;
+                case 429:
+                    apiError.message = serverMessage || "تعداد درخواست‌ها بیش از حد مجاز است";
+                    showToast.error(apiError.message);
                     break;
                 case 500:
                     apiError.message = serverMessage || "خطای سرور";
+                    showToast.serverError();
                     break;
                 default:
-                    apiError.message = serverMessage || "خطای نامشخص";
+                    // Check if it's a network error (no response)
+                    if (!error.response) {
+                        apiError.message = "خطا در اتصال به سرور";
+                        showToast.networkError();
+                    } else {
+                        apiError.message = serverMessage || "خطای نامشخص";
+                        showToast.error(apiError.message);
+                    }
             }
 
             return Promise.reject(apiError);
