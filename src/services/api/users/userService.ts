@@ -5,7 +5,7 @@ import type { UserCheckAgencyCallProps, UserOTPProps, UserValidateOTPProps } fro
 
 export const userApi = {
   createOTP: async (data: UserOTPProps): Promise<ApiResponse<User>> => {
-    return apiService.post<ApiResponse<User>>("/create_otp/", data);
+    return apiService.post<ApiResponse<User>>("/create_otpp/", data);
   },
 
   validateOTP: async (

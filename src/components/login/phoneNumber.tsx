@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { phoneValidationSchema } from "../../schemas";
 import { userApi } from "../../services/api/users/userService";
+import { showToast, successMessages } from "../../utils/toast";
 
 const PhoneNumber = () => {
   const { handleSubmit, control, watch, formState: { isValid } } = useForm<UserOTPProps>({
@@ -11,15 +12,21 @@ const PhoneNumber = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: UserOTPProps) => {
+  const onSubmit = async (data: UserOTPProps) => {
+    try {
       const phoneNumber = data.phone_number.replace(/\s/g, "");
-      console.log("data",data);
-    userApi.createOTP({phone_number: phoneNumber}).then((res) => {
-      console.log("res",res);
-    }).catch((err) => {
-      console.log("err",err);
-    });
-
+      console.log("data", data);
+      
+      const res = await userApi.createOTP({ phone_number: phoneNumber });
+      console.log("res", res);
+      
+      // Show success toast
+      showToast.success(successMessages.otpSent);
+      
+    } catch (err) {
+      console.log("err", err);
+      // Error toast is already handled by the API service
+    }
   };
 
   return (
