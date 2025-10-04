@@ -1,9 +1,10 @@
+import OTPCode from "../components/login/OTPCode"
 import AuthLayout from "../layouts/AuthLayout"
 
 const OTPPage = () => {
   return (
     <AuthLayout>
-        OTPPage
+        <OTPCode />
     </AuthLayout>
   )
 }

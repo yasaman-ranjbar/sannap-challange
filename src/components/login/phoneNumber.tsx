@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { phoneValidationSchema } from "../../schemas";
 import { userApi } from "../../services/api/users/userApi";
 import { useNavigate } from "react-router-dom";
+import { API_ROUTES } from "../../constant/routes";
 
 const PhoneNumber = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const PhoneNumber = () => {
     try {
       const phoneNumber = data.phone_number.replace(/\s/g, "");
       await userApi.createOTP({ phone_number: phoneNumber });
-      navigate("/otp");
+      navigate(`${API_ROUTES.OTP}?phone_number=${phoneNumber}`);
       reset();
     } catch (err) {
       console.log("err", err)

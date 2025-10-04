@@ -12,6 +12,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       loading = false,
       fullWidth = false,
       className = "",
+      icon,
       ...rest
     },
     ref
@@ -28,9 +29,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     // Size styles
     const sizeStyles = {
-      sm: "px-4 py-2 text-sm h-9",
-      md: "px-6 py-[10px] text-lg h-12",
-      lg: "px-8 py-4 text-base h-14",
+      sm: "px-4 text-sm h-9",
+      md: "px-6 text-lg h-12",
+      lg: "px-8 text-base h-14",
     };
 
     // Variant styles
@@ -44,6 +45,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline: isDisabled
         ? "border-2 border-gray-200 text-gray-400 bg-white"
         : "border-2 border-[#017785] text-[#017785] bg-white hover:bg-[#017785] hover:text-white focus:ring-[#017785]",
+      text: isDisabled
+        ? "text-gray-400"
+        : "text-[#017785] hover:text-[#015960] focus:ring-[#017785]",
     };
 
     return (
@@ -58,10 +62,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         `}
         {...rest}
       >
-        {loading && (
-          <LoadingSpinner size="sm" className="mr-2" />
-        )}
+        {loading && <LoadingSpinner size="sm" className="mr-2" />}
         {children}
+        {icon && <img src={icon} alt="icon" className="mr-2" />}
       </button>
     );
   }
