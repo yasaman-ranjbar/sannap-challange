@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import OTPIcon from "../../assets/icon/OTP.svg";
 import OTPInput from "react-otp-input";
@@ -8,10 +8,12 @@ import resentCodeIcon from "../../assets/icon/resenCode.svg";
 import clsx from "clsx";
 import type { UserValidateOTPProps } from "../../services/api/users/type";
 import { userApi } from "../../services/api/users/userApi";
+import { API_ROUTES } from "../../constant/routes";
 
 const OTPCode = () => {
   const [queryParams] = useSearchParams();
   const [timer, setTimer] = useState(120);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -47,7 +49,7 @@ const OTPCode = () => {
 
   // Handle resend OTP
   const handleResendOTP = () => {
-    setTimer(45);
+    setTimer(120);
     userApi
       .createOTP({ phone_number: queryParams.get("phone_number") || "" })
       .then(() => reset());
@@ -67,13 +69,11 @@ const OTPCode = () => {
           code: codeValue,
           phone_number: phoneNumber,
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           clearErrors("code");
+          navigate(API_ROUTES.FULL_NAME);
         })
         .catch((err) => {
-          console.log(err);
-          // Set error with Persian message from fa_details
           setError("code", {
             message:
               err?.error_details?.fa_details || "کد وارد شده نامعتبر است",
@@ -111,7 +111,7 @@ const OTPCode = () => {
                   <input
                     {...props}
                     className={clsx(
-                      errors.code && "border-red-500",
+                      errors.code && "border-[#E14856]",
                       "h-10 w-full border-2 border-[#D2D1D1] rounded-[5px] flex-1 focus:outline-none focus:border-[#2A9BA8]"
                     )}
                   />
@@ -146,7 +146,7 @@ const OTPCode = () => {
           fullWidth
           className="mt-[5px]"
           type="submit"
-          disabled={!isValid || !watch("code")}
+          disabled={!errors.code || codeValue.length !== 5}
         >
           ادامه
         </Button>
