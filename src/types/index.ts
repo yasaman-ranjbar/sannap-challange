@@ -9,9 +9,12 @@ export interface User {
 
 // Example API Response type
 export interface ApiResponse<T> {
+  error_details: null;
+  is_success: boolean;
   data: T;
   message?: string;
-  success: boolean;
+  response: string;
+  status_code: number;
 }
 
 // Example Form Data type
