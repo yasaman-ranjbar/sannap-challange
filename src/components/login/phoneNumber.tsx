@@ -17,7 +17,7 @@ const PhoneNumber = () => {
     try {
       const phoneNumber = data.phone_number.replace(/\s/g, "");
       await userApi.createOTP({ phone_number: phoneNumber });
-      navigate("/otp");
+      navigate(`/otp?phone_number=${phoneNumber}`);
       reset();
     } catch (err) {
       console.log("err", err)
