@@ -7,18 +7,20 @@ import { Button } from "../common";
 import resentCodeIcon from "../../assets/icon/resenCode.svg";
 import clsx from "clsx";
 import type { UserValidateOTPProps } from "../../services/api/users/type";
+import { userApi } from "../../services/api/users/userApi";
 
 const OTPCode = () => {
   const [queryParams] = useSearchParams();
-  const [timer, setTimer] = useState(45);
-  const [error, setError] = useState("");
+  const [timer, setTimer] = useState(120);
 
   const {
     handleSubmit,
     watch,
     control,
-    getValues,
-    formState: { isValid },
+    setError,
+    clearErrors,
+    reset,
+    formState: { isValid, errors },
   } = useForm<UserValidateOTPProps>({
     mode: "onChange",
   });
@@ -46,18 +48,39 @@ const OTPCode = () => {
   // Handle resend OTP
   const handleResendOTP = () => {
     setTimer(45);
+    userApi
+      .createOTP({ phone_number: queryParams.get("phone_number") || "" })
+      .then(() => reset());
   };
 
   const onSubmit = (data: UserValidateOTPProps) => {
     console.log(data);
   };
 
+  const codeValue = watch("code");
+
   useEffect(() => {
-    const codeValue = watch("code");
     if (codeValue && codeValue.length === 5) {
-      console.log(getValues("code"));
+      const phoneNumber = queryParams.get("phone_number") || "";
+      userApi
+        .validateOTP({
+          code: codeValue,
+          phone_number: phoneNumber,
+        })
+        .then((res) => {
+          console.log(res);
+          clearErrors("code");
+        })
+        .catch((err) => {
+          console.log(err);
+          // Set error with Persian message from fa_details
+          setError("code", {
+            message:
+              err?.error_details?.fa_details || "کد وارد شده نامعتبر است",
+          });
+        });
     }
-  }, [watch("code"), getValues("code")]);
+  }, [codeValue, queryParams, clearErrors, setError]);
 
   return (
     <div>
@@ -88,6 +111,7 @@ const OTPCode = () => {
                   <input
                     {...props}
                     className={clsx(
+                      errors.code && "border-red-500",
                       "h-10 w-full border-2 border-[#D2D1D1] rounded-[5px] flex-1 focus:outline-none focus:border-[#2A9BA8]"
                     )}
                   />

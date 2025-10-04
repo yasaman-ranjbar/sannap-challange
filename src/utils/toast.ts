@@ -44,40 +44,6 @@ export const showToast = {
     });
   },
 
-  unauthorized: (message?: string, options?: ToastOptions) => {
-    toast.error(message || 'دسترسی غیرمجاز', {
-      icon: icons.unauthorized,
-      ...options
-    });
-  },
-
-  forbidden: (message?: string, options?: ToastOptions) => {
-    toast.error(message || 'کاربر غیرمجاز', {
-      icon: icons.forbidden,
-      ...options
-    });
-  },
-
-  notFound: (message?: string, options?: ToastOptions) => {
-    toast.error(message || 'صفحه یا منبع مورد نظر یافت نشد', {
-      icon: icons.notFound,
-      ...options
-    });
-  },
-
-  networkError: (message?: string, options?: ToastOptions) => {
-    toast.error(message || 'خطا در اتصال به سرور', {
-      icon: icons.networkError,
-      ...options
-    });
-  },
-
-  serverError: (message?: string, options?: ToastOptions) => {
-    toast.error(message || 'خطای سرور', {
-      icon: icons.serverError,
-      ...options
-    });
-  }
 };
 
 // Type for custom icons
