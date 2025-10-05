@@ -15,6 +15,7 @@ export interface InputProps
   dir?: "rtl" | "ltr";
   prefix?: string;
   isPhoneNumber?: boolean;
+  phoneType?: "mobile" | "landline";
   inputDir?: "rtl" | "ltr";
   isValid?: boolean;
   isValidating?: boolean;

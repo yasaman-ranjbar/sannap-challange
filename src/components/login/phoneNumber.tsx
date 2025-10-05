@@ -9,7 +9,13 @@ import { API_ROUTES } from "../../constant/routes";
 
 const PhoneNumber = () => {
   const navigate = useNavigate();
-  const { handleSubmit, control, watch, formState: { isValid }, reset } = useForm<UserOTPProps>({
+  const {
+    handleSubmit,
+    control,
+    watch,
+    formState: { isValid },
+    reset,
+  } = useForm<UserOTPProps>({
     resolver: yupResolver(phoneValidationSchema),
     mode: "onChange",
   });
@@ -21,7 +27,7 @@ const PhoneNumber = () => {
       navigate(`${API_ROUTES.OTP}?phone_number=${phoneNumber}`);
       reset();
     } catch (err) {
-      console.log("err", err)
+      console.log("err", err);
     }
   };
 
@@ -37,7 +43,10 @@ const PhoneNumber = () => {
         <Controller
           name="phone_number"
           control={control}
-          render={({ field: { onChange, value, onBlur, name }, fieldState: { error } }) => (
+          render={({
+            field: { onChange, value, onBlur, name },
+            fieldState: { error },
+          }) => (
             <Input
               label="تلفن همراه"
               name={name}
@@ -49,6 +58,7 @@ const PhoneNumber = () => {
               placeholder="XXX - XXX - XXXX"
               prefix="۹۸+"
               isPhoneNumber
+              phoneType="mobile"
               dir="rtl"
               inputDir="ltr"
             />

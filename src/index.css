@@ -77,7 +77,7 @@ body {
 }
 
 .react-select__indicator-separator {
-  background-color: #e5e7eb;
+  display: none;
 }
 
 .react-select__dropdown-indicator {
