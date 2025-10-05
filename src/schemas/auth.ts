@@ -2,8 +2,8 @@ import * as yup from "yup";
 
 export const iranianPhoneSchema = yup
   .string()
-  .required()
-  .test((value) => {
+  .required("شماره موبایل الزامی است")
+  .test("iranian-phone", "شماره موبایل وارد شده معتبر نیست", (value) => {
     if (!value) return false;
     const cleanNumber = value.replace(/\s/g, "");
 

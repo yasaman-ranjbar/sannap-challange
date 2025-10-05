@@ -16,6 +16,9 @@ const AgentInfo = () => {
   const methods = useForm<AgentInfoFormData>({
     resolver: yupResolver(agentInfoSchema) as Resolver<AgentInfoFormData>,
     mode: "onSubmit",
+    defaultValues: {
+      agency_type: "real",
+    },
   });
   const { handleSubmit } = methods;
 

@@ -18,6 +18,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       dir = "rtl",
       prefix,
       isPhoneNumber = false,
+      phoneType = "landline",
       inputDir,
       isValid = false,
       isValidating = false,
@@ -28,33 +29,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const hasError = touched && error;
 
-    // Format Iranian phone number as user types
-    const formatPhoneNumber = (input: string): string => {
-      // Remove all non-digit characters
-      const digits = input.replace(/\D/g, "");
-
-      // Format: XXXX XXX XXXX
-      if (digits.length <= 4) {
-        return digits;
-      } else if (digits.length <= 7) {
-        return `${digits.slice(0, 4)} ${digits.slice(4)}`;
-      } else {
-        return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(
-          7,
-          11
-        )}`;
-      }
-    };
-
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (isPhoneNumber) {
         const input = e.target.value;
         const digits = input.replace(/\D/g, "");
 
-        // Limit to 11 digits for Iranian phone number
-        if (digits.length <= 11) {
-          const formatted = formatPhoneNumber(digits);
-          e.target.value = formatted;
+        // Limit based on phone type: 11 digits for mobile, 8 digits for landline
+        const maxDigits = phoneType === "mobile" ? 11 : 8;
+        if (digits.length <= maxDigits) {
+          e.target.value = digits;
           onChange?.(e);
         }
       } else {
@@ -77,10 +60,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {/* Input Field */}
-        <div className="relative">
+        <div className="relative h-12">
           {/* Country Code Prefix */}
           {prefix && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none z-10">
+            <div className="absolute left-4 top-0 bottom-0 flex items-center gap-2 pointer-events-none z-10">
               <div className="w-px h-6 bg-[#D2D1D1]"></div>
               <span className="text-[#D2D1D1] text-sm">{prefix}</span>
             </div>
@@ -88,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {/* Validation Icons */}
           {showValidationIcon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
+            <div className="absolute left-4 top-0 bottom-0 flex items-center z-10">
               {isValidating ? (
                 <svg
                   className="animate-spin h-5 w-5 text-gray-400"

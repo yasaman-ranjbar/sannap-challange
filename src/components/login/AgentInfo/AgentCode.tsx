@@ -1,11 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Button, Input, Radio } from "../../common";
 import Select from "react-select";
-import type {
-  Province,
-  County,
-  InsuranceBranchResponse,
-} from "../../../types";
+import type { Province, County, InsuranceBranchResponse } from "../../../types";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { userApi } from "../../../services/api/users/userApi";
 
@@ -15,11 +11,7 @@ interface OptionType {
 }
 
 const AgentCode = () => {
-  const {
-    control,
-    watch,
-    setValue,
-  } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
 
   const [provinces, setProvinces] = useState<OptionType[]>([]);
   const [counties, setCounties] = useState<OptionType[]>([]);
@@ -150,7 +142,7 @@ const AgentCode = () => {
               })
             );
             setBranches(options);
-          }finally {
+          } finally {
             setLoadingBranches(false);
           }
         }, 500);
@@ -161,7 +153,6 @@ const AgentCode = () => {
     },
     [selectedProvince]
   );
-
 
   return (
     <div className="w-full space-y-4">
@@ -332,8 +323,8 @@ const AgentCode = () => {
               onBlur={onBlur}
               error={error?.message}
               touched={!!error}
-              placeholder="XXX - XXX - XXXX"
-              prefix="21+"
+              placeholder="XX - XX - XX - XX"
+              prefix="021"
               isPhoneNumber
               dir="rtl"
               inputDir="ltr"

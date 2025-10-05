@@ -13,6 +13,7 @@ import { API_ROUTES } from "../../constant/routes";
 const OTPCode = () => {
   const [queryParams] = useSearchParams();
   const [timer, setTimer] = useState(120);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -56,17 +57,12 @@ const OTPCode = () => {
   };
 
   const onSubmit = (data: UserValidateOTPProps) => {
-    console.log(data);
-  };
-
-  const codeValue = watch("code");
-
-  useEffect(() => {
-    if (codeValue && codeValue.length === 5) {
+    if (isSubmitting) {
       const phoneNumber = queryParams.get("phone_number") || "";
+      setIsSubmitting(false);
       userApi
         .validateOTP({
-          code: codeValue,
+          code: data.code,
           phone_number: phoneNumber,
         })
         .then(() => {
@@ -80,7 +76,9 @@ const OTPCode = () => {
           });
         });
     }
-  }, [codeValue, queryParams, clearErrors, setError]);
+  };
+
+  const codeValue = watch("code");
 
   return (
     <div>
@@ -146,7 +144,8 @@ const OTPCode = () => {
           fullWidth
           className="mt-[5px]"
           type="submit"
-          disabled={!errors.code || codeValue.length !== 5}
+          disabled={!codeValue || codeValue.length !== 5}
+          onClick={() => setIsSubmitting(true)}
         >
           ادامه
         </Button>
