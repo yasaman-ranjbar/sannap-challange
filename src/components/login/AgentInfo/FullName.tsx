@@ -5,8 +5,17 @@ import type { AgentInfoProps } from "./type";
 const Fullname = ({ changeStep }: AgentInfoProps) => {
   const {
     control,
-    watch,
+    trigger,
   } = useFormContext();
+
+  const handleContinue = async () => {
+    // Validate only first_name and last_name fields
+    const isValid = await trigger(["first_name", "last_name"]);
+    if (isValid) {
+      changeStep();
+    }
+  };
+
   return (
     <div className="w-full space-y-4">
       <div className="flex flex-col gap-8">
@@ -54,8 +63,7 @@ const Fullname = ({ changeStep }: AgentInfoProps) => {
         fullWidth
         className="mt-[5px]"
         type="button"
-        disabled={!watch("first_name") || !watch("last_name")}
-        onClick={changeStep}
+        onClick={handleContinue}
       >
         ادامه
       </Button>
@@ -63,4 +71,4 @@ const Fullname = ({ changeStep }: AgentInfoProps) => {
   );
 };
 
-export default Fullname
+export default Fullname;

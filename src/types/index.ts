@@ -17,10 +17,21 @@ export interface County {
   name: string;
 }
 
-// Insurance Branch type
-export interface InsuranceBranch {
+export interface InsuranceBranchResponse {
   id: number;
   name: string;
+  county: number;
+  insurance: number;
+  province: number;
+};
+
+// Insurance Branch type
+export interface responseProps {
+  error_details: null;
+  is_success: true;
+  message: string;
+  response: InsuranceBranchResponse[];
+  status_code: number;
 }
 
 // Example API Response type

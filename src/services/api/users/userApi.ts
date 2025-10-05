@@ -1,29 +1,37 @@
 // User-specific API calls
-import { api, baseApi } from "../../interseptor";
+import { api, baseApi, insuranceApi } from "../../interseptor";
 import type {
   User,
   ApiResponse,
   Province,
   County,
-  InsuranceBranch,
+  responseProps,
 } from "../../../types";
 import type {
   getAgencyCodeProps,
   UserCheckAgencyCallProps,
   UserOTPProps,
+  UserSignupProps,
   UserValidateOTPProps,
 } from "./type";
+import type { AgentInfoFormData } from "../../../components/login/AgentInfo/type";
 
 export const userApi = {
   createOTP: async (data: UserOTPProps): Promise<ApiResponse<User>> => {
-    const response = await api.post<ApiResponse<User>>("/create_otp/", data);
+    const response = await api.post<ApiResponse<User>>(
+      "/signup/create_otp/",
+      data
+    );
     return response.data;
   },
 
   validateOTP: async (
     data: UserValidateOTPProps
   ): Promise<ApiResponse<User>> => {
-    const response = await api.post<ApiResponse<User>>("/validate_otp/", data);
+    const response = await api.post<ApiResponse<User>>(
+      "/signup/validate_otp/",
+      data
+    );
     return response.data;
   },
 
@@ -31,7 +39,7 @@ export const userApi = {
     data: UserCheckAgencyCallProps
   ): Promise<ApiResponse<User>> => {
     const response = await api.post<ApiResponse<User>>(
-      "/check_agency_code/",
+      "/signup/check_agency_code/",
       data
     );
     return response.data;
@@ -51,16 +59,21 @@ export const userApi = {
     return response.data;
   },
 
-  getAgencyCode: async (
-    data: getAgencyCodeProps
-  ): Promise<InsuranceBranch[]> => {
-    const response = await api.get<InsuranceBranch[]>("/wop_list/", {
+  getAgencyCode: async (data: getAgencyCodeProps): Promise<responseProps> => {
+    const response = await insuranceApi.get<responseProps>("/wop_list/", {
       params: {
         name: data.name,
-        insurance: "DEY",
+        insurance: data.insurance,
         province: data.province,
       },
     });
     return response.data;
   },
+
+  signup: async (data: UserSignupProps): Promise<responseProps> => {
+    const response = await api.post<responseProps>("/signup/", data);
+    return response.data;
+  },
 };
+
+ 

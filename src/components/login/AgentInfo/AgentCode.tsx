@@ -1,10 +1,13 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Button, Input, Radio } from "../../common";
 import Select from "react-select";
-import type { Province, County, InsuranceBranch } from "../../../types";
+import type {
+  Province,
+  County,
+  InsuranceBranchResponse,
+} from "../../../types";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { userApi } from "../../../services/api/users/userApi";
-import { showToast } from "../../../utils/toast";
 
 interface OptionType {
   value: number;
@@ -12,7 +15,11 @@ interface OptionType {
 }
 
 const AgentCode = () => {
-  const { control, watch, setValue } = useFormContext();
+  const {
+    control,
+    watch,
+    setValue,
+  } = useFormContext();
 
   const [provinces, setProvinces] = useState<OptionType[]>([]);
   const [counties, setCounties] = useState<OptionType[]>([]);
@@ -136,17 +143,17 @@ const AgentCode = () => {
               insurance: "DEY",
               province: selectedProvince.value,
             });
-            const options = data.map((branch: InsuranceBranch) => ({
-              value: branch.id,
-              label: branch.name,
-            }));
+            const options = data.response.map(
+              (branch: InsuranceBranchResponse) => ({
+                value: branch.id,
+                label: branch.name,
+              })
+            );
             setBranches(options);
-          } catch (error) {
-            console.error("Error fetching branches:", error);
-          } finally {
+          }finally {
             setLoadingBranches(false);
           }
-        }, 500); // 500ms debounce delay
+        }, 500);
       } else {
         setLoadingBranches(false);
         setBranches([]);
@@ -154,6 +161,7 @@ const AgentCode = () => {
     },
     [selectedProvince]
   );
+
 
   return (
     <div className="w-full space-y-4">
@@ -216,6 +224,11 @@ const AgentCode = () => {
                     }),
                   }}
                 />
+                {error && (
+                  <p className="mt-1 text-xs text-red-500 text-right">
+                    {error.message}
+                  </p>
+                )}
               </>
             )}
           />
@@ -251,6 +264,11 @@ const AgentCode = () => {
                     }),
                   }}
                 />
+                {error && (
+                  <p className="mt-1 text-xs text-red-500 text-right">
+                    {error.message}
+                  </p>
+                )}
               </>
             )}
           />
@@ -289,6 +307,11 @@ const AgentCode = () => {
                     }),
                   }}
                 />
+                {error && (
+                  <p className="mt-1 text-xs text-red-500 text-right">
+                    {error.message}
+                  </p>
+                )}
               </>
             )}
           />
@@ -336,24 +359,26 @@ const AgentCode = () => {
           )}
         />
 
-        <Controller
-          name="phone"
-          control={control}
-          render={({
-            field: { onChange, value, onBlur, name },
-            fieldState: { error },
-          }) => (
-            <Input
-              label="نام نمایندگی "
-              name={name}
-              value={value || ""}
-              onChange={onChange}
-              onBlur={onBlur}
-              error={error?.message}
-              touched={!!error}
-            />
-          )}
-        />
+        {watch("agency_type") === "real" && (
+          <Controller
+            name="Name"
+            control={control}
+            render={({
+              field: { onChange, value, onBlur, name },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="نام نمایندگی "
+                name={name}
+                value={value || ""}
+                onChange={onChange}
+                onBlur={onBlur}
+                error={error?.message}
+                touched={!!error}
+              />
+            )}
+          />
+        )}
       </div>
 
       <Button

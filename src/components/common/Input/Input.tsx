@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       // Remove all non-digit characters
       const digits = input.replace(/\D/g, "");
 
-      // Format: XXXX XXX XXXX 
+      // Format: XXXX XXX XXXX
       if (digits.length <= 4) {
         return digits;
       } else if (digits.length <= 7) {
@@ -164,6 +164,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             `}
             {...rest}
           />
+
+          {/* Error Message */}
+          {hasError && (
+            <p
+              className={`mt-2 text-xs text-red-500 ${
+                dir === "rtl" ? "text-right" : "text-left"
+              }`}
+            >
+              {error}
+            </p>
+          )}
         </div>
       </div>
     );
