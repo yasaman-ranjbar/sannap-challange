@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       // Remove all non-digit characters
       const digits = input.replace(/\D/g, "");
 
-      // Format: XXXX XXX XXXX (Iranian format: 0912 438 8097)
+      // Format: XXXX XXX XXXX 
       if (digits.length <= 4) {
         return digits;
       } else if (digits.length <= 7) {

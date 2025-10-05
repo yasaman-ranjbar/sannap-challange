@@ -61,7 +61,11 @@ const createAPIClient = (baseURL: string): AxiosInstance => {
       };
 
       if (errorDetails?.fa_details) {
-        showToast.error(errorDetails?.fa_details);
+        if (errorDetails.code === "agent_code_unique") {
+          showToast.warning(`کد نمایندگی قبلاً ثبت شده است`);
+        } else {
+          showToast.error(errorDetails?.fa_details);
+        }
       }
 
       return Promise.reject(apiError);

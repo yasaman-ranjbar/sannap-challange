@@ -54,7 +54,7 @@ export const userApi = {
   getAgencyCode: async (
     data: getAgencyCodeProps
   ): Promise<InsuranceBranch[]> => {
-    const response = await baseApi.get<InsuranceBranch[]>("/wop_list/", {
+    const response = await api.get<InsuranceBranch[]>("/wop_list/", {
       params: {
         name: data.name,
         insurance: "DEY",

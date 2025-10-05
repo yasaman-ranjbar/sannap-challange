@@ -1,5 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { Button, Input } from "../../common";
+import { Button, Input, Radio } from "../../common";
 import Select from "react-select";
 import type { Province, County, InsuranceBranch } from "../../../types";
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -24,6 +24,12 @@ const AgentCode = () => {
   const [isAgentCodeValid, setIsAgentCodeValid] = useState(false);
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Agent type options
+  const agentTypeOptions = [
+    { label: "حقیقی", value: "real" },
+    { label: "حقوقی", value: "legal" },
+  ];
 
   const selectedProvince = watch("province");
   const selectedCounty = watch("county");
@@ -97,11 +103,10 @@ const AgentCode = () => {
 
         try {
           await userApi.checkAgencyCall({ agent_code: agentCodeValue });
-          
+
           setIsAgentCodeValid(true);
         } catch (error) {
           setIsAgentCodeValid(false);
-          showToast.warning(`کد نمایندگی ${agentCodeValue} قبلاً ثبت شده است`);
         } finally {
           setIsValidatingAgentCode(false);
         }
@@ -312,6 +317,43 @@ const AgentCode = () => {
             />
           )}
         />
+        <Controller
+          name="agency_type"
+          control={control}
+          render={({
+            field: { onChange, value, name },
+            fieldState: { error },
+          }) => (
+            <Radio
+              label="نوع نمایندگی"
+              name={name}
+              options={agentTypeOptions}
+              value={value}
+              onChange={onChange}
+              error={error?.message}
+              touched={!!error}
+            />
+          )}
+        />
+
+        <Controller
+          name="phone"
+          control={control}
+          render={({
+            field: { onChange, value, onBlur, name },
+            fieldState: { error },
+          }) => (
+            <Input
+              label="نام نمایندگی "
+              name={name}
+              value={value || ""}
+              onChange={onChange}
+              onBlur={onBlur}
+              error={error?.message}
+              touched={!!error}
+            />
+          )}
+        />
       </div>
 
       <Button
@@ -320,7 +362,6 @@ const AgentCode = () => {
         fullWidth
         className="mt-[5px]"
         type="submit"
-        disabled={!watch("agent_code") || !watch("phone")}
       >
         ثبت نهایی
       </Button>

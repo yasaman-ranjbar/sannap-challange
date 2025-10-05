@@ -24,6 +24,3 @@ dist-ssr
 *.sw?
 
 README.md
-PROJECT_STRUCTURE.md
-QUICK_START.md
-hooks
