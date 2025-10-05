@@ -10,3 +10,9 @@ export interface UserValidateOTPProps {
 export interface UserCheckAgencyCallProps {
   agent_code: string;
 }
+
+export interface getAgencyCodeProps {
+  name: string | number;
+  insurance:string;
+  province:number;
+}

@@ -1,67 +1,54 @@
-import toast, { type ToastOptions } from 'react-hot-toast';
-import React from 'react';
+import toast, { type ToastOptions } from "react-hot-toast";
+import React from "react";
+import { toastConfig } from "../constant/toastConfig";
+import WarningIcon from "../assets/icon/WarningIcon";
 
-// Define custom icons as React elements or emoji strings
 const icons = {
-  success: '✅',
-  error: '❌',
-  warning: '⚠️',
-  info: 'ℹ️',
-  unauthorized: '🔒',
-  forbidden: '🚫',
-  notFound: '❓',
-  networkError: '🌐',
-  serverError: '🔧'
+  success: "✅",
+  error: React.createElement(WarningIcon, {
+    backgroundColor: toastConfig.error.iconTheme.primary,
+    iconColor: toastConfig.error.iconTheme.secondary,
+  }),
+  warning: React.createElement(WarningIcon, {
+    backgroundColor: toastConfig.warning.iconTheme.primary,
+    iconColor: toastConfig.warning.iconTheme.secondary,
+  }),
+  info: "ℹ️",
 };
 
-// Toast utility functions with icons
 export const showToast = {
   success: (message: string, options?: ToastOptions) => {
     toast.success(message, {
       icon: icons.success,
-      ...options
+      style: toastConfig.success.style,
+      iconTheme: toastConfig.success.iconTheme,
+      ...options,
     });
   },
 
   error: (message: string, options?: ToastOptions) => {
     toast.error(message, {
       icon: icons.error,
-      ...options
+      style: toastConfig.error.style,
+      iconTheme: toastConfig.error.iconTheme,
+      ...options,
     });
   },
 
   warning: (message: string, options?: ToastOptions) => {
     toast(message, {
       icon: icons.warning,
-      ...options
+      style: toastConfig.warning.style,
+      iconTheme: toastConfig.warning.iconTheme,
+      ...options,
     });
   },
 
   info: (message: string, options?: ToastOptions) => {
     toast(message, {
       icon: icons.info,
-      ...options
+      ...options,
     });
   },
-
 };
 
-// Type for custom icons
-type IconType = string | React.ReactElement;
-
-// Alternative approach: Custom toast with JSX icons
-export const showToastWithCustomIcon = {
-  success: (message: string, customIcon?: IconType, options?: ToastOptions) => {
-    toast.success(message, {
-      icon: customIcon || icons.success,
-      ...options
-    });
-  },
-
-  error: (message: string, customIcon?: IconType, options?: ToastOptions) => {
-    toast.error(message, {
-      icon: customIcon || icons.error,
-      ...options
-    });
-  }
-};

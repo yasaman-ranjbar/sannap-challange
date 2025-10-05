@@ -22,7 +22,7 @@ const OTPCode = () => {
     setError,
     clearErrors,
     reset,
-    formState: { isValid, errors },
+    formState: { errors },
   } = useForm<UserValidateOTPProps>({
     mode: "onChange",
   });
@@ -71,7 +71,7 @@ const OTPCode = () => {
         })
         .then(() => {
           clearErrors("code");
-          navigate(API_ROUTES.FULL_NAME);
+          navigate(API_ROUTES.AGENT_INFO);
         })
         .catch((err) => {
           setError("code", {

@@ -1,10 +1,26 @@
-
-
 // Example User type
 export interface User {
   id: string;
   name: string;
   email: string;
+}
+
+// Province type
+export interface Province {
+  id: number;
+  name: string;
+}
+
+// County type
+export interface County {
+  id: number;
+  name: string;
+}
+
+// Insurance Branch type
+export interface InsuranceBranch {
+  id: number;
+  name: string;
 }
 
 // Example API Response type
