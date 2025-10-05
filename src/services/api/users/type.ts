@@ -13,6 +13,7 @@ export interface UserCheckAgencyCallProps {
 
 export interface getAgencyCodeProps {
   name: string | number;
-  insurance:string;
-  province:number;
+  insurance: string;
+  province: number;
 }
+

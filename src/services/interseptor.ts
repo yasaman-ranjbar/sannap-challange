@@ -85,6 +85,10 @@ export const baseApiClient = createAPIClient(
   import.meta.env.VITE_BASE_API_URL_BASE || ""
 );
 
+export const insuranceApiClient = createAPIClient(
+  import.meta.env.VITE_INSURANCE_API_BASE_URL || ""
+);
+
 // HTTP Methods for main API
 export const api = {
   get: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
@@ -110,4 +114,9 @@ export const api = {
 export const baseApi = {
   get: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
     baseApiClient.get<T>(url, config),
+};
+
+export const insuranceApi = {
+  get: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
+    insuranceApiClient.get<T>(url, config),
 };
