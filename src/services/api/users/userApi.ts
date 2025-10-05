@@ -11,6 +11,7 @@ import type {
   getAgencyCodeProps,
   UserCheckAgencyCallProps,
   UserOTPProps,
+  UserSignupProps,
   UserValidateOTPProps,
 } from "./type";
 import type { AgentInfoFormData } from "../../../components/login/AgentInfo/type";
@@ -69,7 +70,7 @@ export const userApi = {
     return response.data;
   },
 
-  signup: async (data: AgentInfoFormData): Promise<responseProps> => {
+  signup: async (data: UserSignupProps): Promise<responseProps> => {
     const response = await api.post<responseProps>("/signup/", data);
     return response.data;
   },

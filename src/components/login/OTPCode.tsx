@@ -71,7 +71,7 @@ const OTPCode = () => {
         })
         .then(() => {
           clearErrors("code");
-          navigate(API_ROUTES.AGENT_INFO);
+          navigate(`${API_ROUTES.AGENT_INFO}?phone_number=${phoneNumber}`);
         })
         .catch((err) => {
           setError("code", {

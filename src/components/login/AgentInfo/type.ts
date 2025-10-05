@@ -16,6 +16,5 @@ export interface AgentInfoFormData {
   insurance_branch: OptionType | null;
   phone: string;
   agency_type: "real" | "legal";
-  agency_name?: string;
   Name?: string;
 }

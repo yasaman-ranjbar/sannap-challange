@@ -80,18 +80,14 @@ export const agentInfoSchema = yup.object({
       "انتخاب شعبه بیمه‌گر الزامی است",
       (value) => value !== null && value !== undefined
     ),
-  phone: yup
-    .string()
-    .required("تلفن ثابت الزامی است")
-  ,
+  phone: yup.string().required("تلفن ثابت الزامی است"),
   agency_type: yup
     .string()
     .required("نوع نمایندگی الزامی است")
     .oneOf(["real", "legal"], "نوع نمایندگی نامعتبر است"),
-  agency_name: yup.string().when("agency_type", {
+  Name: yup.string().when("agency_type", {
     is: "real",
     then: (schema) => schema.required("نام نمایندگی الزامی است"),
     otherwise: (schema) => schema.optional(),
   }),
-  Name: yup.string().required("نام نمایندگی الزامی است"),
 });
