@@ -57,6 +57,9 @@ VITE_API_BASE_URL=https://stage.api.sanaap.co/api/v2/app/DEY/agent/verification/
 
 # Base API endpoint for provinces, cities, and agency codes
 VITE_BASE_API_URL_BASE=https://stage.api.sanaap.co/base
+
+# Base API URL for insurance_branch
+VITE_INSURANCE_API_BASE_URL=https://stage.api.sanaap.co/api/v2/app/selection_item/insurance_branch
 ```
 
 4. Start development server
