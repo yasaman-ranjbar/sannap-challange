@@ -71,12 +71,17 @@ const createAPIClient = (baseURL: string): AxiosInstance => {
   return client;
 };
 
-// Create and export API client instance
+// Create and export API client instances
 export const apiClient = createAPIClient(
   import.meta.env.VITE_API_BASE_URL || ""
 );
 
-// HTTP Methods
+// Create second API client for base endpoints
+export const baseApiClient = createAPIClient(
+  import.meta.env.VITE_BASE_API_URL_BASE || ""
+);
+
+// HTTP Methods for main API
 export const api = {
   get: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
     apiClient.get<T>(url, config),
@@ -95,4 +100,10 @@ export const api = {
 
   delete: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
     apiClient.delete<T>(url, config),
+};
+
+// HTTP Methods for base API (provinces, cities, etc.)
+export const baseApi = {
+  get: <T = unknown>(url: string, config?: AxiosRequestConfig) =>
+    baseApiClient.get<T>(url, config),
 };

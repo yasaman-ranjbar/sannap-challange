@@ -21,3 +21,127 @@ body {
   direction: rtl;
   color: #505050;
 }
+
+/* React Select Styles for RTL */
+.react-select-container {
+  direction: rtl;
+  text-align: right;
+}
+
+.react-select__control {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-family: "IRANSans", sans-serif;
+  transition: all 0.2s ease;
+}
+
+.react-select__control:hover {
+  border-color: #d1d5db;
+}
+
+.react-select__control--is-focused {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.react-select__control--is-disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.react-select__value-container {
+  padding: 8px 12px;
+  direction: rtl;
+}
+
+.react-select__placeholder {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.react-select__single-value {
+  color: #505050;
+  direction: rtl;
+  text-align: right;
+}
+
+.react-select__input-container {
+  direction: rtl;
+}
+
+.react-select__input {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+.react-select__indicator-separator {
+  background-color: #e5e7eb;
+}
+
+.react-select__dropdown-indicator {
+  color: #6b7280;
+  padding: 8px;
+}
+
+.react-select__dropdown-indicator:hover {
+  color: #374151;
+}
+
+.react-select__clear-indicator {
+  color: #6b7280;
+  padding: 8px;
+}
+
+.react-select__clear-indicator:hover {
+  color: #dc2626;
+}
+
+.react-select__menu {
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 4px;
+  direction: rtl;
+  font-family: "IRANSans", sans-serif;
+}
+
+.react-select__menu-list {
+  padding: 4px;
+  direction: rtl;
+}
+
+.react-select__option {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 2px 0;
+  direction: rtl;
+  text-align: right;
+  transition: all 0.15s ease;
+}
+
+.react-select__option--is-focused {
+  background-color: #f3f4f6;
+}
+
+.react-select__option--is-selected {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.react-select__option:active {
+  background-color: #dbeafe;
+}
+
+.react-select__loading-indicator {
+  color: #3b82f6;
+}
+
+.react-select__no-options-message {
+  color: #9ca3af;
+  padding: 12px;
+  text-align: center;
+  direction: rtl;
+}

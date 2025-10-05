@@ -1,6 +1,12 @@
 // User-specific API calls
-import { api } from "../../interseptor";
-import type { User, ApiResponse } from "../../../types";
+import { api, baseApi } from "../../interseptor";
+import type {
+  User,
+  ApiResponse,
+  Province,
+  County,
+  InsuranceBranch,
+} from "../../../types";
 import type {
   getAgencyCodeProps,
   UserCheckAgencyCallProps,
@@ -31,24 +37,24 @@ export const userApi = {
     return response.data;
   },
 
-  getProvinces: async (): Promise<ApiResponse<User>> => {
-    const response = await api.get<ApiResponse<User>>("/provinces_wop/");
+  getProvinces: async (): Promise<Province[]> => {
+    const response = await baseApi.get<Province[]>("/provinces_wop/");
     return response.data;
   },
 
-  getCities: async (
-    data: Record<string, number>
-  ): Promise<ApiResponse<User>> => {
-    const response = await api.get<ApiResponse<User>>("/counties_wop/", {params: {
-      province: data.province,
-    }});
+  getCities: async (data: Record<string, number>): Promise<County[]> => {
+    const response = await baseApi.get<County[]>("/counties_wop/", {
+      params: {
+        province: data.province,
+      },
+    });
     return response.data;
   },
 
   getAgencyCode: async (
     data: getAgencyCodeProps
-  ): Promise<ApiResponse<User>> => {
-    const response = await api.get<ApiResponse<User>>("/wop_list/", {
+  ): Promise<InsuranceBranch[]> => {
+    const response = await baseApi.get<InsuranceBranch[]>("/wop_list/", {
       params: {
         name: data.name,
         insurance: "DEY",
