@@ -4,6 +4,7 @@ import Select from "react-select";
 import type { Province, County, InsuranceBranch } from "../../../types";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { userApi } from "../../../services/api/users/userApi";
+import { showToast } from "../../../utils/toast";
 
 interface OptionType {
   value: number;
@@ -19,11 +20,14 @@ const AgentCode = () => {
   const [loadingProvinces, setLoadingProvinces] = useState(false);
   const [loadingCounties, setLoadingCounties] = useState(false);
   const [loadingBranches, setLoadingBranches] = useState(false);
+  const [isValidatingAgentCode, setIsValidatingAgentCode] = useState(false);
+  const [isAgentCodeValid, setIsAgentCodeValid] = useState(false);
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const selectedProvince = watch("province");
   const selectedCounty = watch("county");
+  const agentCodeValue = watch("agent_code");
 
   // Load provinces on component mount
   useEffect(() => {
@@ -78,6 +82,38 @@ const AgentCode = () => {
     }
   }, [selectedProvince, setValue]);
 
+  // Check agent code when 4 digits are entered
+  useEffect(() => {
+    const checkAgentCode = async () => {
+      if (agentCodeValue && agentCodeValue.length === 4) {
+        // Check if it's only digits
+        if (!/^\d{4}$/.test(agentCodeValue)) {
+          setIsAgentCodeValid(false);
+          return;
+        }
+
+        setIsValidatingAgentCode(true);
+        setIsAgentCodeValid(false);
+
+        try {
+          await userApi.checkAgencyCall({ agent_code: agentCodeValue });
+          
+          setIsAgentCodeValid(true);
+        } catch (error) {
+          setIsAgentCodeValid(false);
+          showToast.warning(`کد نمایندگی ${agentCodeValue} قبلاً ثبت شده است`);
+        } finally {
+          setIsValidatingAgentCode(false);
+        }
+      } else {
+        setIsAgentCodeValid(false);
+        setIsValidatingAgentCode(false);
+      }
+    };
+
+    checkAgentCode();
+  }, [agentCodeValue]);
+
   // Handle branch search with debounce
   const handleBranchSearch = useCallback(
     (inputValue: string) => {
@@ -128,10 +164,20 @@ const AgentCode = () => {
               label="کد نمایندگی"
               name={name}
               value={value}
-              onChange={onChange}
+              onChange={(e) => {
+                // Only allow digits
+                const numericValue = e.target.value.replace(/\D/g, "");
+                e.target.value = numericValue;
+                onChange(e);
+              }}
               onBlur={onBlur}
               error={error?.message}
               touched={!!error}
+              maxLength={4}
+              inputMode="numeric"
+              showValidationIcon={true}
+              isValidating={isValidatingAgentCode}
+              isValid={isAgentCodeValid}
             />
           )}
         />
