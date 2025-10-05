@@ -1,12 +1,19 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Button, Input } from "../../common";
+import Select from "react-select/base";
+import type { User } from "../../../types";
+import { useState } from "react";
 
 const AgentCode = () => {
-  const {
-    control,
-    watch,
-    formState: { isValid },
-  } = useForm();
+  const { control, watch } = useFormContext();
+
+  const [provinces, setProvinces] = useState<User[]>([]);
+  const [cities, setCities] = useState<User[]>([]);
+
+  useEffect(() => {
+    userApi.getProvinces().then((res) => setProvinces(res.data));
+    userApi.getCities().then((res) => setCities(res.data));
+  }, []);
 
   return (
     <div className="w-full space-y-4">
@@ -28,6 +35,30 @@ const AgentCode = () => {
               touched={!!error}
             />
           )}
+        />
+        <Controller
+          name="province"
+          control={control}
+          render={({
+            field: { onChange, value, onBlur, name },
+            fieldState: { error },
+          }) => <Select value={} onChange={} options={} />}
+        />
+        <Controller
+          name="county"
+          control={control}
+          render={({
+            field: { onChange, value, onBlur, name },
+            fieldState: { error },
+          }) => <Select value={} onChange={} options={} />}
+        />
+        <Controller
+          name="insurance_branch"
+          control={control}
+          render={({
+            field: { onChange, value, onBlur, name },
+            fieldState: { error },
+          }) => <Select value={} onChange={} options={} />}
         />
         <Controller
           name="phone"
@@ -60,9 +91,9 @@ const AgentCode = () => {
         fullWidth
         className="mt-[5px]"
         type="submit"
-        disabled={!isValid || !watch("phone_number")}
+        disabled={!watch("agent_code") || !watch("phone")}
       >
-        ادامه
+        ثبت نهایی
       </Button>
     </div>
   );

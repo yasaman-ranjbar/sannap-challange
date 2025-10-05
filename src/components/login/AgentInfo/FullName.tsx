@@ -1,8 +1,12 @@
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Button, Input } from "../../common";
+import type { AgentInfoProps } from "./type";
 
-const Fullname = () => {
-    const { control, watch, formState: { isValid } } = useForm();
+const Fullname = ({ changeStep }: AgentInfoProps) => {
+  const {
+    control,
+    watch,
+  } = useFormContext();
   return (
     <div className="w-full space-y-4">
       <div className="flex flex-col gap-8">
@@ -49,13 +53,14 @@ const Fullname = () => {
         size="md"
         fullWidth
         className="mt-[5px]"
-        type="submit"
-        disabled={!isValid || !watch("phone_number")}
+        type="button"
+        disabled={!watch("first_name") || !watch("last_name")}
+        onClick={changeStep}
       >
         ادامه
       </Button>
     </div>
   );
-}
+};
 
 export default Fullname
