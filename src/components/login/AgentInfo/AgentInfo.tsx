@@ -20,7 +20,7 @@ const AgentInfo = () => {
       agency_type: "real",
     },
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const onSubmit = async (data: AgentInfoFormData) => {
     const payload = {
@@ -41,7 +41,7 @@ const AgentInfo = () => {
     try {
       const res = await userApi.signup(payload);
       navigate(`${API_ROUTES.USER_STATUS}?success=${res.is_success}`);
-      console.log(data);
+      reset();
     } catch (error) {
       console.log(error);
     }

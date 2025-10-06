@@ -1,19 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "../components/common";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { API_ROUTES } from "../constant/routes";
+import { useNavigate } from "react-router-dom";
 
 const UserStatusPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const [queryParams] = useSearchParams();
-  const success = queryParams.get("success") === "true";
-
-  useEffect(() => {
-    if (!success) {
-      navigate(API_ROUTES.HOME);
-    }
-  }, [success]);
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -23,6 +14,19 @@ const UserStatusPage = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Handle browser back button
+    const handlePopState = () => {
+      navigate("/", { replace: true });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen w-full flex justify-center py-10 relative">

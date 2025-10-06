@@ -51,9 +51,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={name}
-            className={`block text-xs font-normal text-gray-800 mb-2.5 ${
-              dir === "rtl" ? "text-right" : "text-left"
-            }`}
+            className="block text-xs font-normal text-gray-800 mb-2.5 text-right"
           >
             {label}
           </label>
@@ -150,13 +148,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {/* Error Message */}
           {hasError && (
-            <p
-              className={`mt-2 text-xs text-red-500 ${
-                dir === "rtl" ? "text-right" : "text-left"
-              }`}
-            >
-              {error}
-            </p>
+            <p className="mt-2 text-xs text-red-500 text-right">{error}</p>
           )}
         </div>
       </div>

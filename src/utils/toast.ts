@@ -13,7 +13,6 @@ const icons = {
     backgroundColor: toastConfig.warning.iconTheme.primary,
     iconColor: toastConfig.warning.iconTheme.secondary,
   }),
-  info: "ℹ️",
 };
 
 export const showToast = {
@@ -40,13 +39,6 @@ export const showToast = {
       icon: icons.warning,
       style: toastConfig.warning.style,
       iconTheme: toastConfig.warning.iconTheme,
-      ...options,
-    });
-  },
-
-  info: (message: string, options?: ToastOptions) => {
-    toast(message, {
-      icon: icons.info,
       ...options,
     });
   },

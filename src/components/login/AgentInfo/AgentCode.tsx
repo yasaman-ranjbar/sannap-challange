@@ -208,10 +208,25 @@ const AgentCode = () => {
                   classNamePrefix="react-select"
                   noOptionsMessage={() => "موردی یافت نشد"}
                   styles={{
-                    control: (base) => ({
+                    control: (base, state) => ({
                       ...base,
                       minHeight: "48px",
-                      borderColor: error ? "#ef4444" : base.borderColor,
+                      borderColor: error
+                        ? "#ef4444"
+                        : state.isFocused
+                        ? "#017785"
+                        : base.borderColor,
+                      boxShadow:
+                        state.isFocused && !error
+                          ? "0 0 0 3px rgba(1, 119, 133, 0.1)"
+                          : base.boxShadow,
+                      "&:hover": {
+                        borderColor: error
+                          ? "#ef4444"
+                          : state.isFocused
+                          ? "#017785"
+                          : "#d1d5db",
+                      },
                     }),
                   }}
                 />
@@ -248,10 +263,25 @@ const AgentCode = () => {
                   classNamePrefix="react-select"
                   noOptionsMessage={() => "موردی یافت نشد"}
                   styles={{
-                    control: (base) => ({
+                    control: (base, state) => ({
                       ...base,
                       minHeight: "48px",
-                      borderColor: error ? "#ef4444" : base.borderColor,
+                      borderColor: error
+                        ? "#ef4444"
+                        : state.isFocused
+                        ? "#017785"
+                        : base.borderColor,
+                      boxShadow:
+                        state.isFocused && !error
+                          ? ""
+                          : base.boxShadow,
+                      "&:hover": {
+                        borderColor: error
+                          ? "#ef4444"
+                          : state.isFocused
+                          ? "#017785"
+                          : "#d1d5db",
+                      },
                     }),
                   }}
                 />
@@ -291,10 +321,25 @@ const AgentCode = () => {
                   classNamePrefix="react-select"
                   noOptionsMessage={() => "هیچ موردی پیدا نشد"}
                   styles={{
-                    control: (base) => ({
+                    control: (base, state) => ({
                       ...base,
                       minHeight: "48px",
-                      borderColor: error ? "#ef4444" : base.borderColor,
+                      borderColor: error
+                        ? "#ef4444"
+                        : state.isFocused
+                        ? "#017785"
+                        : base.borderColor,
+                      boxShadow:
+                        state.isFocused && !error
+                          ? "0 0 0 3px rgba(1, 119, 133, 0.1)"
+                          : base.boxShadow,
+                      "&:hover": {
+                        borderColor: error
+                          ? "#ef4444"
+                          : state.isFocused
+                          ? "#017785"
+                          : "#d1d5db",
+                      },
                     }),
                   }}
                 />
@@ -376,7 +421,7 @@ const AgentCode = () => {
         variant="primary"
         size="md"
         fullWidth
-        className="mt-[5px]"
+        className="mt-[15px]"
         type="submit"
       >
         ثبت نهایی

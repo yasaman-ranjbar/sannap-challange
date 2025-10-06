@@ -68,11 +68,12 @@ const OTPCode = () => {
         .then(() => {
           clearErrors("code");
           navigate(`${API_ROUTES.AGENT_INFO}?phone_number=${phoneNumber}`);
+          reset()
         })
         .catch((err) => {
           setError("code", {
             message:
-              err?.error_details?.fa_details || "کد وارد شده نامعتبر است",
+              err?.error_details?.fa_details,
           });
         });
     }
